@@ -13,7 +13,6 @@ class PostsController < ApplicationController
     matching_posts = Post.where({ :id => the_id })
 
     @the_post = matching_posts.at(0)
-
     render({ :template => "posts/show" })
   end
 
@@ -23,6 +22,7 @@ class PostsController < ApplicationController
     the_post.body = params.fetch("query_body")
     the_post.expires_on = params.fetch("query_expires_on")
     the_post.board_id = params.fetch("query_board_id")
+    the_post.user_id = current_user.id
 
     if the_post.valid?
       the_post.save
